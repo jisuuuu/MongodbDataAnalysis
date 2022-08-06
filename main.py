@@ -55,3 +55,19 @@ data.append({'name' : 'hmm'})
 
 knowledge_it.insert_many(data)
 print(knowledge_it.estimated_document_count())
+
+print(knowledge_it.find_one())
+print(knowledge_it.find_one({'author': 'Dave'}))
+
+docs = knowledge_it.find()
+
+for d in docs:
+    print(d)
+
+news = knowledge_it.find({'author': 'Dave'})
+
+for n in news:
+    print(n)
+
+for post in knowledge_it.find().sort('age'):
+    print(post)
