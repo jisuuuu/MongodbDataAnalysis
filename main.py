@@ -81,3 +81,10 @@ knowledge_it.update_one(
 knowledge_it.update_many( {"author": "Dave Lee"}, {"$set": { "age": 30}})
 for n in knowledge_it.find({'author': 'Dave Lee'}):
     print(n)
+
+docs = knowledge_it.find({'author': 'Dave'})
+
+for d in docs:
+    print(d)
+
+knowledge_it.delete_many({'author': 'Dave'})
