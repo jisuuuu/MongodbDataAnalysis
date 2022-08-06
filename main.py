@@ -71,3 +71,13 @@ for n in news:
 
 for post in knowledge_it.find().sort('age'):
     print(post)
+
+knowledge_it.update_one(
+    {'author': 'Dave'},
+    {
+        '$set': {'text': 'Hi Dave'}
+    }
+)
+knowledge_it.update_many( {"author": "Dave Lee"}, {"$set": { "age": 30}})
+for n in knowledge_it.find({'author': 'Dave Lee'}):
+    print(n)
