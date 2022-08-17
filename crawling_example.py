@@ -35,3 +35,14 @@ soup = BeautifulSoup(res.content, 'html.parser')
 actors = soup.select('li.people_li div.name')
 for actor in actors:
     print(re.sub('\(\w*\)', '', actor.text))
+
+# 5. 배우 상세 정보 추출
+for actor in actors:
+    actor_link = 'http://www.cine21.com' + actor.select_one('a').attrs['href']
+    response_actor = requests.get(actor_link)
+    soup_actor = BeautifulSoup(response_actor.content, 'html.parser')
+    default_info = soup_actor.select_one('ul.default_info')
+    actor_details = default_info.select('li')
+
+    for actor_item in actor_details:
+        print(actor_item)
