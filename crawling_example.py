@@ -37,6 +37,8 @@ for actor in actors:
     print(re.sub('\(\w*\)', '', actor.text))
 
 # 5. 배우 상세 정보 추출
+# 특수한 정규 표현식
+# Greedy(.*) 욕심 가득한 것 vs Non-Greedy(.*?) 욕심을 줄인 것
 for actor in actors:
     actor_link = 'http://www.cine21.com' + actor.select_one('a').attrs['href']
     response_actor = requests.get(actor_link)
@@ -46,3 +48,7 @@ for actor in actors:
 
     for actor_item in actor_details:
         print(actor_item)
+        print(actor_item.select_one('span.tit').text)
+        actor_item_value = re.sub('<span.*?>.*?</span>', '', str(actor_item))
+        actor_item_value = re.sub('<.*?>', '', actor_item_value)
+        print(actor_item_value)
