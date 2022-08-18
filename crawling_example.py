@@ -39,6 +39,9 @@ for actor in actors:
 # 5. 배우 상세 정보 추출
 # 특수한 정규 표현식
 # Greedy(.*) 욕심 가득한 것 vs Non-Greedy(.*?) 욕심을 줄인 것
+
+actors_info_list = list()
+
 for actor in actors:
     actor_link = 'http://www.cine21.com' + actor.select_one('a').attrs['href']
     response_actor = requests.get(actor_link)
@@ -46,9 +49,18 @@ for actor in actors:
     default_info = soup_actor.select_one('ul.default_info')
     actor_details = default_info.select('li')
 
+    actor_info_dict = dict()
+
     for actor_item in actor_details:
-        print(actor_item)
-        print(actor_item.select_one('span.tit').text)
+        actor_item_field = actor_item.select_one('span.tit').text
         actor_item_value = re.sub('<span.*?>.*?</span>', '', str(actor_item))
         actor_item_value = re.sub('<.*?>', '', actor_item_value)
-        print(actor_item_value)
+        actor_info_dict[actor_item_field] = actor_item_value
+    actors_info_list.append(actor_info_dict)
+print(actors_info_list)
+
+# 6. 배우 흥행 지수 뽑기
+hits = soup.select('ul.num_info > li > strong')
+for index, actor in enumerate(actors):
+    print(re.sub('\(\w*\)', '', actor.text))
+    print(int(hits[index].text.replace(',', '')))
