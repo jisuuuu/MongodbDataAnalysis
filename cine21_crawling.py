@@ -3,6 +3,10 @@ import requests
 import pymongo
 import re
 
+conn = pymongo.MongoClient()
+actor_db = conn.cine21
+actor_collection = actor_db.actor_collection
+
 cine21_url = 'http://www.cine21.com/rank/person/content'
 post_data = dict()
 post_data['section'] = 'actor'
@@ -48,4 +52,4 @@ for i in range(1, 21):
             actor_item_value = re.sub('<.*?>', '', actor_item_value)
             actor_info_dict[actor_item_field] = actor_item_value
         actors_info_list.append(actor_info_dict)
-print(actors_info_list)
+actor_collection.insert_many(actors_info_list)
