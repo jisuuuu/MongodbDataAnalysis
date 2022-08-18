@@ -44,6 +44,7 @@ soup = BeautifulSoup(res.content, 'html.parser')
 actors = soup.select('li.people_li div.name')
 hits = soup.select('ul.num_info > li > strong')
 movies = soup.select('ul.mov_list')
+rankings = soup.select('li.people_li > span.grade')
 actors_info_list = list()
 
 for index, actor in enumerate(actors):
@@ -58,6 +59,7 @@ for index, actor in enumerate(actors):
     actor_info_dict['배우이름'] = actor_name
     actor_info_dict['흥행지수'] = actor_hits
     actor_info_dict['출연영화'] = movie_title_list
+    actor_info_dict['랭킹'] = rankings[index].text
 
     actor_link = 'http://www.cine21.com' + actor.select_one('a').attrs['href']
     response_actor = requests.get(actor_link)
