@@ -14,7 +14,30 @@ for doc in docs:
 actor = actor_collection
 
 # Single 필드 인덱스
-print(actor.create_index('배우이름'))
-# actor.drop_indexes()
-print(actor.index_information())
-actor.drop_index([('배우이름', 1)])
+# print(actor.create_index('배우이름'))
+actor.drop_indexes()
+# actor.drop_index([('배우이름', 1)])
+
+# docs = actor.find({'배우이름': '손석구'})
+# for doc in docs:
+#     print(doc)
+#
+# actor.create_index([('출연영화', 'text')])
+# print(actor.index_information())
+#
+# docs = actor.find({'$text': {'$search': '한산'}})
+# for doc in docs:
+#     print(doc)
+
+# actor.create_index([('출연영화', 'text')])
+# print(actor.index_information())
+#
+# docs = actor.find({'$text': {'$search': '한산'}})
+# for doc in docs:
+#     print(doc)
+
+actor.create_index([('출연영화', pymongo.TEXT), ('직업', pymongo.TEXT)
+                    , ('흥행지수', pymongo.TEXT)])
+docs = actor.find({'$text': {'$search': '한'}})
+for doc in docs:
+    print(doc)
