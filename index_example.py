@@ -36,8 +36,16 @@ actor.drop_indexes()
 # for doc in docs:
 #     print(doc)
 
-actor.create_index([('출연영화', pymongo.TEXT), ('직업', pymongo.TEXT)
-                    , ('흥행지수', pymongo.TEXT)])
-docs = actor.find({'$text': {'$search': '한'}})
-for doc in docs:
-    print(doc)
+# actor.create_index([('출연영화', pymongo.TEXT), ('직업', pymongo.TEXT)
+#                     , ('흥행지수', pymongo.TEXT)])
+# docs = actor.find({'$text': {'$search': '한'}})
+# for doc in docs:
+#     print(doc)
+
+# result = actor.find({'출연영화' : {'$regex':'도시'}})
+# for r in result:
+#     print(r)
+
+result = actor.find({'출신학교' : {'$regex':'중앙대학교'}}).sort('흥행지수', pymongo.DESCENDING).limit(10)
+for r in result:
+    print(r)
