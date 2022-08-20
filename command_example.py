@@ -47,7 +47,26 @@ for doc in docs:
     print(doc)
 
 docs = actor_collection.find({'흥행지수': {'$gte': 10000},'$or': [{'출연영화': '한산: 용의 출현'}, {'출연영화': '명량'}]},
-                             {'배우이름': 1, '출연영화': 1, '_id': 0}).sort('배우이름')
+                             {'배우이름': 1, '출연영화': 1, '_id': 0}).sort('배우이름').limit(3)
 print(5)
+for doc in docs:
+    print(doc)
+
+# 6. find의 다양한 문법 - nor
+docs = actor_collection.find({'$nor': [{'흥행지수': {'$gte': 10000}}, {'흥행지수': {'$lt': 1000}}]},
+                             {'배우이름': 1, '흥행지수': 1, '_id': 0}).limit(3)
+print(6)
+for doc in docs:
+    print(doc)
+
+# 7. find의 다양한 문법 - in, nin¶
+docs = actor_collection.find({'흥행지수': {'$in': [9357, 9455]}},
+                             {'배우이름': 1, '흥행지수': 1, '_id': 0})
+print(7)
+for doc in docs:
+    print(doc)
+docs = actor_collection.find({'흥행지수': {'$nin': [9357, 9455]}},
+                             {'배우이름': 1, '흥행지수': 1, '_id': 0}).limit(3)
+print(7)
 for doc in docs:
     print(doc)
