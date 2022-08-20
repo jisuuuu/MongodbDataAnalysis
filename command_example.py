@@ -101,3 +101,19 @@ for doc in docs:
 docs = actor_collection.find({'출연영화': {'$size': 5}})
 for doc in docs:
     print(doc)
+
+# 10. find의 다양한 문법 (elemMatch)
+elemmatch_sample = actor_db.sample
+
+# elemmatch_sample.insert_many([
+#     {'results': [82, 85, 88]},
+#     {'results': [75, 88, 91]}
+# ])
+
+docs = elemmatch_sample.find({'results': {'$gte': 90, '$lt': 85}})
+for doc in docs:
+    print(doc)
+
+docs = elemmatch_sample.find({'results': {'$elemMatch': {'$gte': 85, '$lt': 90}}})
+for doc in docs:
+    print(doc)
