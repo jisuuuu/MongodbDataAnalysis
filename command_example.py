@@ -70,3 +70,34 @@ docs = actor_collection.find({'흥행지수': {'$nin': [9357, 9455]}},
 print(7)
 for doc in docs:
     print(doc)
+
+# 8.find의 다양한 문법 - skip, limit
+# skip 상위 3개 출력 X
+docs = actor_collection.find({'흥행지수': {'$gte': 10000}}).skip(3).limit(3)
+print(8)
+for doc in docs:
+    print(doc)
+
+# 9. find의 다양한 문법 - list 검색, all
+docs = actor_collection.find({'$or': [{'출연영화': '장르만 로맨스'}, {'출연영화': '4등'}]})
+print(9)
+for doc in docs:
+    print(doc)
+
+docs = actor_collection.find({'출연영화': ['독전', '랭킹']})
+print(9)
+for doc in docs:
+    print(doc)
+
+docs = actor_collection.find({'출연영화': {'$all': ['독전', '범죄도시2']}})
+print(9)
+for doc in docs:
+    print(doc)
+
+docs = actor_collection.find({'출연영화.0': '범죄도시2'})
+for doc in docs:
+    print (doc)
+
+docs = actor_collection.find({'출연영화': {'$size': 5}})
+for doc in docs:
+    print(doc)
